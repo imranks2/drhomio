@@ -1,0 +1,78 @@
+
+networks:
+  homeo-network:
+    driver: bridge
+
+services:
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: healthstack
+      MYSQL_USER: healthstack_user
+      MYSQL_PASSWORD: healthstack_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - homeo-network
+
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "80:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - homeo-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    depends_on:
+      - web
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: healthstack_user
+      PMA_PASSWORD: healthstack_pass
+    ports:
+      - "8081:80"
+    networks:
+      - homeo-network
+
+  # ngrok:
+  #   image: ngrok/ngrok:latest
+  #   depends_on:
+  #     web:
+  #       condition: service_healthy
+  #   command: http localhost:8000  # Forwarding to the web service on port 8000
+  #   # command:
+  #   #   - "http"
+  #   #   - "web:80"  # If using Docker DNS
+  #   #   # OR
+  #   #   - "http://web:80"  # Full URL format
+  #   #   # OR if exposing host port
+  #   #   - "host.docker.internal:8080"
+  #   environment:
+  #     NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+  #     NGROK_HOST: "stud-relaxed-horribly.ngrok-free.app" 
+  #     NGROK_REGION: "global"  # Set to "global" for worldwide access, or specify a region like "us", "eu", etc.
+  #   ports:
+  #     - "4040:4040"
+  #   networks:
+  #     - homeo-network
+
+volumes:
+  mysql_data:

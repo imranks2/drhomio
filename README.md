@@ -1,2 +1,2 @@
 # drhomio
-Homeopathy complete solution online
+Practo clone
