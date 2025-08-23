@@ -23,3 +23,6 @@ virtualenv==20.14.1
 whitenoise==6.2.0
 widgetsnbextension==3.5.2
 xhtml2pdf==0.2.8
+gunicorn==20.1.0
+whitenoise==6.2.0
+python-dotenv==0.21.1

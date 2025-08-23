@@ -33,6 +33,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ALLOWED_HOSTS = ['.ngrok-free.app','192.168.0.100', 'localhost', '127.0.0.1', 'web', 'web:80', 'localhost:80']
 # ALLOWED_HOSTS = ['mobile view', 'local host','ngrok -- keeps on changing'] ,'5749-103-109-53-5.in.ngrok.io'
 
