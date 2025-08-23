@@ -19,7 +19,6 @@ docker-compose.yml
 Dockerfile
 
 # Environments
-.env
 .venv
 env/
 env_dir/

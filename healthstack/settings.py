@@ -104,11 +104,11 @@ import os
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE', 'healthstack'),
-        'USER': os.environ.get('MYSQL_USER', 'healthstack_user'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'healthstack_pass'),
-        'HOST': os.environ.get('DB_HOST', 'db'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'NAME': os.environ.get('MYSQLDATABASE', 'healthstack'),
+        'USER': os.environ.get('MYSQLUSER', 'healthstack_user'),
+        'PASSWORD': os.environ.get('MYSQLPASSWORD', 'healthstack_pass'),
+        'HOST': os.environ.get('MYSQLHOST', 'db'),
+        'PORT': os.environ.get('MYSQLPORT', '3306'),
     }
 }
 
